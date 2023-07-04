@@ -12,10 +12,11 @@ void    *my_routine()
     for (int i = 0; i < 1000000; i++)
     {
         // control the acess to this memory area. Protect it from being acessed for more than one thread at a time
-        // pthread_mutex_lock(&mutex); //uncomment this line to see the effect of a mutex
+        pthread_mutex_lock(&mutex); //uncomment this line to see the effect of a mutex
         mails++;
-        // pthread_mutex_unlock(&mutex);
+        pthread_mutex_unlock(&mutex);
     }
+    return (NULL);
 }
 
 int main(void)

@@ -9,7 +9,7 @@ void* roll_dice() {
     int* result = malloc(sizeof(int));
     *result = value;
     sleep(1);
-    return (void*) result;
+    return ((void*) result);
 }
 
 // int main(int argc, char* argv[]) {

@@ -12,7 +12,7 @@ void    *my_routine()
     for (int i = 0; i < 1000000; i++)
     {
         pthread_mutex_lock(&mutex);
-            mails++;
+        mails++;
         pthread_mutex_unlock(&mutex);
     }
 }
@@ -28,7 +28,6 @@ int main(void)
     {
         if (pthread_create(th + i, NULL, &my_routine, NULL) != 0)
         {
-            
             perror("Failed to create thread");
             return(1);
         }
