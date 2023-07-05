@@ -9,12 +9,13 @@ pthread_mutex_t mutex;
 
 void    *my_routine()
 {
-    for (int i = 0; i < 1000000; i++)
+    for (int i = 0; i < 100000000; i++)
     {
         pthread_mutex_lock(&mutex);
         mails++;
         pthread_mutex_unlock(&mutex);
     }
+    return (NULL);
 }
 
 int main(void)
