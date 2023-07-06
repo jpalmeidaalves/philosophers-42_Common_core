@@ -6,7 +6,7 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 21:58:59 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/04 10:07:06 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:46:57 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ uint64_t    get_time(void)
 
 }
 
-uint64_t    elapsed_time(t_data ph)
+uint64_t    elapsed_time(t_data *info)
 {
-    return (get_time() - ph.start_time);
+    return (get_time() - info->start_time);
 }
 

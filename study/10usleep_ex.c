@@ -14,8 +14,8 @@ uint64_t    get_time(void)
 
 int     main(void)
 {   
-    uint64_t start;
-    uint64_t now;
+    suseconds_t start;
+    suseconds_t now;
 
     start = get_time();
     usleep(220000); //usleep take time in microseconds (10000 usecs = 10 millisecs)

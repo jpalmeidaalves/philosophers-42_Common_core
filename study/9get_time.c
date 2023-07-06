@@ -37,7 +37,7 @@ int     main(void)
     //3rd  step - acess the struct in order to get the time 
     long int my_time_in_secs = t1.tv_sec; 
     printf("seconds since the epoch: %ld\n", my_time_in_secs);
-    long int my_time_in_usec = t1.tv_usec;
+    uint64_t my_time_in_usec = t1.tv_usec;
     printf("microseconds since the epoch: %ld\n", my_time_in_usec);
 
     /* To get the time in milliseconds (1sec = 1000 millisecs and
