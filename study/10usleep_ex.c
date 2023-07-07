@@ -11,6 +11,10 @@ uint64_t    get_time(void)
     return ((t1.tv_sec * (uint64_t)1000) + t1.tv_usec / 1000);
 
 }
+void     ft_usleep(unsigned int nb)
+{
+    usleep(nb * 1000);
+}
 
 int     main(void)
 {   
@@ -18,7 +22,7 @@ int     main(void)
     suseconds_t now;
 
     start = get_time();
-    usleep(220000); //usleep take time in microseconds (10000 usecs = 10 millisecs)
+    ft_usleep(220); //usleep take time in microseconds (10000 usecs = 10 millisecs)
     now = get_time();
     printf("passed %ld ms since the start of the program\n", now - start);
 

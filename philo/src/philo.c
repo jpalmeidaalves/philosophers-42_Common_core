@@ -6,13 +6,13 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 19:18:50 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/06 15:25:13 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/07 16:21:13 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void    *function(void *arg)
+void    *debug_function(void *arg)
 {
     t_data  *info;
 
@@ -20,13 +20,18 @@ void    *function(void *arg)
     info = (t_data *)arg;
     while (i < 10000000)
     {
-        pthread_mutex_lock(&info->print_mutex);
+        pthread_mutex_lock(&info->ph_muts[4]);
         info->var++;
-        pthread_mutex_unlock(&info->print_mutex);
+        pthread_mutex_unlock(&info->ph_muts[4]);
         i++;
     }
     return (NULL);
 }
+/* void    *simulation(void *)
+{
+    
+} */
+
 /* int     pick_forks(t_data *info)
 {
     
@@ -38,13 +43,14 @@ int    start_philo(int ac, char **args)
     t_data     *info;
     
     info = malloc(sizeof(t_data));
-    pthread_mutex_init(&info->print_mutex, NULL);
+    //pthread_mutex_init(&info->print_mutex, NULL);
     start_info(info, ac, args);
+    init_ph_muts(info);
     init_philos_thread(info);
-    //print_philos(*info);
     init_forks(info);
+    print_philos(*info);
     join_thread(info);
-    printf("result: %d\n", info->var);
+    printf("debug result: %d\n", info->var);
     free(info);
     return (0);
 }

@@ -2,7 +2,7 @@ NAME		= philo
 
 CC      	= cc 
 
-CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -Wall -Werror -Wextra -g
 
 RM		= rm -rf
 
@@ -22,10 +22,10 @@ all: $(NAME)
 bonus: $(philo_bonus)
 
 $(NAME): $(OBJ) $(SRC)
-	$(CC) -g $(CFLAGS) $(SRC) -o philo
+	$(CC) -g $(CFLAGS) $(SRC) -lpthread -o philo
 
 $(PHIL0_BONUS): $(OBJ_B) $(SRC_B)
-	$(CC) -g $(CFLAGS) $(SRC_B) -o philo_bonus
+	$(CC) -g $(CFLAGS) $(SRC_B) -lpthread -o philo_bonus
 
 
 $(OBJSDIR)/%.o: %.c

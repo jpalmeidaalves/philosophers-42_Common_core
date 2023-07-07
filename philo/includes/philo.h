@@ -6,7 +6,7 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 19:12:16 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/06 08:21:42 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/07 17:17:17 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@
 typedef struct s_philo
 {
     pthread_t   threads_ph;
-    int     *right_fork;
-    int     *left_fork;
+    int     id;
+    int     right_fork;
+    int     left_fork;
+    uint64_t    last_meal;
+    
 } t_philo;
 
 typedef struct s_data
@@ -39,14 +42,16 @@ typedef struct s_data
     int         time_to_sleep;
     int         *forks;
     int         var;
+    int         died;
     uint64_t    start_time;
-    pthread_mutex_t     print_mutex;
+    pthread_mutex_t     *ph_muts;
+    //pthread_mutex_t     print_mutex;;
     t_philo     *philo;
     
 }   t_data;
 
 //philo.
-void    *function(void *arg);
+void    *debug_function(void *arg);
 
 //check_input.c
 int     check_input(int ac, char **av);
@@ -57,6 +62,7 @@ void    print_philos(t_data philos);
 //time_related.c
 uint64_t    get_time(void);
 uint64_t    elapsed_time(t_data *info);
+void     ft_usleep(unsigned int nb);
 
 //utils.c
 long	ft_atol(const char *nptr);
@@ -67,6 +73,8 @@ void    start_info(t_data *info, int ac, char **args);
 void    init_philos_thread(t_data *info);
 void    init_forks(t_data *info);
 void    join_thread(t_data *info);
+void    init_ph_muts(t_data *info);
+
 
 
 
