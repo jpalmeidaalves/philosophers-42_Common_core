@@ -6,7 +6,7 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 19:12:16 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/07 17:17:17 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:32:53 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,14 @@ typedef struct s_data
     int         var;
     int         died;
     uint64_t    start_time;
-    pthread_mutex_t     *ph_muts;
+    pthread_mutex_t     *philo_muts;
     //pthread_mutex_t     print_mutex;;
     t_philo     *philo;
     
 }   t_data;
 
 //philo.
+void    *routine(void *arg);
 void    *debug_function(void *arg);
 
 //check_input.c
@@ -74,9 +75,9 @@ void    init_philos_thread(t_data *info);
 void    init_forks(t_data *info);
 void    join_thread(t_data *info);
 void    init_ph_muts(t_data *info);
+void    init_philos_attributes(t_data *info);
 
-
-
-
+//clear.c
+void    free_struct(t_data *info);
 
 #endif

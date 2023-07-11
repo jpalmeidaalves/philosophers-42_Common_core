@@ -4,6 +4,8 @@ CC      	= cc
 
 CFLAGS		= -Wall -Werror -Wextra -g
 
+SANI		= -fsanitize=thread
+
 RM		= rm -rf
 
 SRC		= $(wildcard src/*.c)
@@ -27,6 +29,8 @@ $(NAME): $(OBJ) $(SRC)
 $(PHIL0_BONUS): $(OBJ_B) $(SRC_B)
 	$(CC) -g $(CFLAGS) $(SRC_B) -lpthread -o philo_bonus
 
+sani: $(NAME)
+	$(CC) -g $(CFLAGS) $(SANI) $(SRC) -lpthread -o philo
 
 $(OBJSDIR)/%.o: %.c
 	mkdir -p $(@D)
@@ -36,6 +40,6 @@ clean:
 	$(RM) $(OBJ) 
 	
 fclean: clean
-	$(RM) $(PHILO) $(PHILO_BONUS)
+	$(RM) $(NAME) $(PHILO_BONUS)
 
 re:	fclean all

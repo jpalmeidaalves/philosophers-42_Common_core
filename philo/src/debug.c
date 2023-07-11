@@ -6,7 +6,7 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 10:12:08 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/07 15:44:49 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:04:58 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ void    print_philos(t_data info)
     int i = 0;
     while (i < info.nb_of_philos)
     {
-        printf("fork %d: %d\n", i, info.forks[i]);
-        printf("last meal: %ld\n", info.philo->last_meal);
+        printf("\tphilo ID: %d \n", info.philo[i].id);
+        printf("\t  right fork: %d \n", info.philo[i].right_fork);
+        printf("\t  left fork: %d \n", info.philo[i].left_fork);
+        printf("\t  last meal: %ld\n", info.philo[i].last_meal);
         i++;
     }
-    
 }
