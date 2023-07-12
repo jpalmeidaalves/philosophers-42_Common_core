@@ -28,6 +28,7 @@
     return (NULL);
 }
   */
+
 void    eat(t_data *info, t_philo *philo)
 {
     int     i;
@@ -98,6 +99,14 @@ void    eat(t_data *info, t_philo *philo)
     pthread_mutex_unlock(&info->philo_muts[i]);
 }
  
+void    sleeping(t_philo *philo)
+{
+    int sleep_time = philo->info->time_to_sleep;
+
+    ft_usleep(sleep_time);
+    printf("%ld %d is sleeping\n", elapsed_time(philo->info), philo->id);
+}
+
 void    *routine(void *arg)
 {
     t_philo *philo;
@@ -115,7 +124,7 @@ void    *routine(void *arg)
             philo->info->first_round = 1;
         }
         eat(info, philo);
-        // sleep
+        sleeping(philo);
         // think  
 
     }
