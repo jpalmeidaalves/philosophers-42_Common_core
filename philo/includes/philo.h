@@ -29,6 +29,7 @@ typedef struct s_philo
     int     right_fork;
     int     left_fork;
     uint64_t    last_meal;
+    struct s_data   *info;
     
 } t_philo;
 
@@ -43,12 +44,12 @@ typedef struct s_data
     int         *forks;
     int         var;
     int         died;
+    int         first_round;
     uint64_t    start_time;
     pthread_mutex_t     *philo_muts;
-    //pthread_mutex_t     print_mutex;;
-    t_philo     *philo;
     
 }   t_data;
+
 
 //philo.
 void    *routine(void *arg);
@@ -58,7 +59,7 @@ void    *debug_function(void *arg);
 int     check_input(int ac, char **av);
 
 //debug.c
-void    print_philos(t_data philos);
+void    print_philos(t_data philos, t_philo philo);
 
 //time_related.c
 uint64_t    get_time(void);
@@ -71,9 +72,9 @@ int	ft_atoi(const char *nptr);
 
 //starting
 void    start_info(t_data *info, int ac, char **args);
-void    init_philos_thread(t_data *info);
+void    init_philos_thread(t_data *info, t_philo *philo);
 void    init_forks(t_data *info);
-void    join_thread(t_data *info);
+void    join_thread(t_philo *philo, t_data info);
 void    init_ph_muts(t_data *info);
 void    init_philos_attributes(t_data *info);
 

@@ -15,18 +15,18 @@
 void    free_struct(t_data *info)
 {
     free(info->philo_muts);
-    free(info->philo);
     free(info->forks);
 }
 
-void    join_thread(t_data *info)
+void    join_thread(t_philo *philo, t_data info)
 {
     int i;
 
     i = 0;
-    while (i < info->nb_of_philos)
+    printf("nbfil2 %d\n", info.nb_of_philos);
+    while (i < info.nb_of_philos)
     {
-        pthread_join(info->philo[i].threads_ph, NULL);
+        pthread_join(philo[i].threads_ph, NULL);
         i++;
     }
 }

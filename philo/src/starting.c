@@ -12,20 +12,29 @@
 
 #include "../includes/philo.h"
 
-void    init_philos_thread(t_data *info)
+void    init_philos_thread(t_data *info, t_philo *philo)
 {
     int i;
 
-    info->philo = malloc(sizeof(t_philo) * info->nb_of_philos);
+    philo = malloc(sizeof(t_philo) * info->nb_of_philos);
+    i = 0;
+    printf("nbfil %d\n", info->nb_of_philos);
+    while (i < info->nb_of_philos)
+    {
+        philo[i].info = info;
+        // pthread_create(&info->philo[i].threads_ph, NULL, debug_function, (void *)info);
+        philo[i].id = i + 1;
+        philo[i].last_meal = elapsed_time(info);
+        philo[i].right_fork = 0;
+        philo[i].left_fork = 0;
+        pthread_create(&philo[i].threads_ph, NULL, routine, (void *)&philo[i]);
+        // printf("thread %d created\n", philo[i].id);
+        i++;
+    }
     i = 0;
     while (i < info->nb_of_philos)
     {
-        pthread_create(&info->philo[i].threads_ph, NULL, routine, (void *)info);
-        info->philo[i].id = i + 1;
-        info->philo[i].right_fork = 0;
-        info->philo[i].left_fork = 0;
-        info->philo[i].last_meal = elapsed_time(info);
-        printf("thread %d created\n", info->philo->id);
+        pthread_join(philo[i].threads_ph, NULL);
         i++;
     }
 }
@@ -46,8 +55,8 @@ void    start_info(t_data *info, int ac, char **args)
     info->start_time = get_time();
     info->var = 0;
     info->philo_muts = NULL;
-    info->philo = NULL;
     info->died = 0;
+    info->first_round = 0;
 }
 
 void    init_ph_muts(t_data *info)
