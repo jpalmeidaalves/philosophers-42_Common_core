@@ -6,7 +6,7 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:04:13 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/13 08:36:48 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/13 08:36:47 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void    init_philos_thread(t_data *info, t_philo *philo)
         philo[i].info = info;
         // pthread_create(&info->philo[i].threads_ph, NULL, debug_function, (void *)info);
         philo[i].id = i + 1;
-        philo[i].last_meal = get_time();
+        philo[i].last_meal = get_time;
         philo[i].right_fork = 0;
         philo[i].left_fork = 0;
         pthread_create(&philo[i].threads_ph, NULL, routine, (void *)&philo[i]);

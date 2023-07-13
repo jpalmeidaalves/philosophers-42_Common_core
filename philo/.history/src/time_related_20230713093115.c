@@ -6,14 +6,15 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 21:58:59 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/13 09:31:16 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/13 09:31:14 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
 
-void     milisleep(unsigned int nb)
+void     milisleep
+(unsigned int nb)
 {
     usleep(nb * 1000);
 }
