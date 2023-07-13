@@ -35,20 +35,20 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-    int         index;
-    int         nb_of_philos;
-    int         nb_rounds;
+    int             index;
+    int             nb_of_philos;
+    int             nb_rounds;
     unsigned long         time_do_die;
     unsigned long         time_to_eat;
     unsigned long         time_to_sleep;
-    int         *forks;
-    int         var;
-    int         died;
-    int         first_round;
-    uint64_t    start_time;
+    int             *forks;
+    int             var;
+    int             died;
+    int                 first_round;
+    uint64_t            start_time;
     pthread_mutex_t     *philo_muts;
-    
-}   t_data;
+    pthread_t           monitoring;
+}       t_data;
 
 
 //philo.
@@ -78,7 +78,7 @@ void    init_philos_thread(t_data *info, t_philo *philo);
 void    init_forks(t_data *info);
 void    join_thread(t_philo *philo, t_data info);
 void    init_ph_muts(t_data *info);
-void    init_philos_attributes(t_data *info);
+// void    init_philos_attributes(t_data *info);
 
 //clear.c
 void    free_struct(t_data *info);

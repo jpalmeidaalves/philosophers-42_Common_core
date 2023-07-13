@@ -55,7 +55,7 @@ void    start_info(t_data *info, int ac, char **args)
     info->var = 0;
     info->philo_muts = NULL;
     info->died = 0;
-    info->first_round = 0;
+    // info->first_round = 1;
 }
 
 void    init_ph_muts(t_data *info)

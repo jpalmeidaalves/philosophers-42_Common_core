@@ -37,13 +37,13 @@ int    start_philo(int ac, char **args)
     t_philo     *philo;
 
     start_info(&info, ac, args);
-    philo = malloc(sizeof(t_philo) * (info.nb_of_philos) );
+    philo = malloc(sizeof(t_philo) * (info.nb_of_philos));
+    pthread_create(&info.monitoring)
     init_ph_muts(&info);
     init_forks(&info);
 
     init_philos_thread(&info, philo);
     // print_philos(info, *philo);
-    //join_thread(philo, info);
     // printf("debug result: %d\n", info.var);
     
     free_struct(&info);

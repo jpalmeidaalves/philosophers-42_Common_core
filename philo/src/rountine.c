@@ -103,10 +103,12 @@ void    *routine(void *arg)
     while (1)
     {
         // printf("ph-id: %d\n" , philo->id); 
-        if (philo->id % 2 == 0 && !philo->info->first_round)
+        if (philo->id % 2 != 0 && philo->info->first_round)
         {
-            milisleep(1);
-            philo->info->first_round = 1;
+            usleep(100);
+            printf("WAIT!");                    
+            philo->info->first_round = 0;
+            printf("flag off\n");
         }
         eat(info, philo);
         if (get_time() - philo->last_meal > info->time_do_die)
