@@ -6,7 +6,7 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:04:13 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/13 11:59:46 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/13 11:46:22 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void    init_philos_thread(t_data *info, t_philo *philo)
 
     philo = malloc(sizeof(t_philo) * info->nb_of_philos);
     i = 0;
+    printf("nbfil %d\n", info->nb_of_philos);
     while (i < info->nb_of_philos)
     {
         philo[i].info = info;
@@ -44,9 +45,9 @@ void    start_info(t_data *info, int ac, char **args)
     (void)ac;
     info->index = 0;
     info->nb_of_philos = ft_atoi(args[1]);
-    info->time_do_die = (unsigned long)ft_atoi(args[2]);
-    info->time_to_eat = (unsigned long)ft_atoi(args[3]);
-    info->time_to_sleep = (unsigned long)ft_atoi(args[4]);
+    info->time_do_die = (ft_atoi(args[2]);
+    info->time_to_eat = ft_atoi(args[3]);
+    info->time_to_sleep = ft_atoi(args[4]);
     if (ac == 6)
         info->nb_rounds = ft_atoi(args[5]);
     else

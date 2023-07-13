@@ -6,7 +6,7 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 09:01:47 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/13 11:49:02 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/13 11:44:35 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void    sleeping(t_philo *philo)
 {
     int sleep_time = philo->info->time_to_sleep;
 
-    printf("%ld %d is sleeping\n", elapsed_time(philo->info), philo->id);
+    printf("%ld  %d is sleeping\n", elapsed_time(philo->info), philo->id);
     milisleep(sleep_time);
     printf("%ld %d is thinking\n", elapsed_time(philo->info), philo->id);
 }
@@ -105,11 +105,11 @@ void    *routine(void *arg)
         // printf("ph-id: %d\n" , philo->id); 
         if (philo->id % 2 == 0 && !philo->info->first_round)
         {
-            milisleep(1);
+            usleep(10);
             philo->info->first_round = 1;
         }
         eat(info, philo);
-        if (get_time() - philo->last_meal > info->time_do_die)
+        if ((int)get_time() - (int)philo->last_meal > info->time_do_die)
         {
             info->died = 1;
             printf("%ld %d died\n", elapsed_time(info), philo->id);

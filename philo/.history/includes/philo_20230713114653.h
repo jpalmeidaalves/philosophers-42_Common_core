@@ -6,7 +6,7 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 19:12:16 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/13 11:47:07 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/13 11:46:53 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef struct s_data
     int         nb_of_philos;
     int         nb_rounds;
     unsigned long         time_do_die;
-    unsigned long         time_to_eat;
-    unsigned long         time_to_sleep;
+    int         time_to_eat;
+    int         time_to_sleep;
     int         *forks;
     int         var;
     int         died;

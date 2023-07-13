@@ -6,7 +6,7 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:04:13 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/13 11:59:46 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/13 11:46:42 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void    init_philos_thread(t_data *info, t_philo *philo)
 
     philo = malloc(sizeof(t_philo) * info->nb_of_philos);
     i = 0;
+    printf("nbfil %d\n", info->nb_of_philos);
     while (i < info->nb_of_philos)
     {
         philo[i].info = info;

@@ -6,7 +6,7 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 09:01:47 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/13 11:49:02 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/13 09:15:35 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ void    eat(t_data *info, t_philo *philo)
         if (philo->right_fork && philo->left_fork)
         {
             printf("%ld %d is eating\n", elapsed_time(info),philo->id);
-            philo->last_meal = get_time();
-            milisleep(info->time_to_eat);
+            ft_usleep(info->time_to_eat);
             info->forks[info->nb_of_philos - 1] = 0;
             philo->right_fork = 0;
             // printf("%5ldms %d drop right fork\n",elapsed_time(info),philo->id);
@@ -70,7 +69,7 @@ void    eat(t_data *info, t_philo *philo)
         {
             printf("%ld %d is eating\n", elapsed_time(info),philo->id);
             philo->last_meal = get_time();
-            milisleep(info->time_to_eat);
+            ft_usleep(info->time_to_eat);
             info->forks[i - 1] = 0;
             philo->right_fork = 0;
             // printf("%5ldms %d drop right fork\n",elapsed_time(info),philo->id);
@@ -87,9 +86,9 @@ void    sleeping(t_philo *philo)
 {
     int sleep_time = philo->info->time_to_sleep;
 
-    printf("%ld %d is sleeping\n", elapsed_time(philo->info), philo->id);
-    milisleep(sleep_time);
-    printf("%ld %d is thinking\n", elapsed_time(philo->info), philo->id);
+    // printf("%5ldms %d is sleeping\n", elapsed_time(philo->info), philo->id);
+    ft_usleep(sleep_time);
+    // printf("%5ldms %d is thinking\n", elapsed_time(philo->info), philo->id);
 }
 
 void    *routine(void *arg)
@@ -105,11 +104,11 @@ void    *routine(void *arg)
         // printf("ph-id: %d\n" , philo->id); 
         if (philo->id % 2 == 0 && !philo->info->first_round)
         {
-            milisleep(1);
+            ft_usleep(1);
             philo->info->first_round = 1;
         }
         eat(info, philo);
-        if (get_time() - philo->last_meal > info->time_do_die)
+        if ((int)get_time() - (int)philo->last_meal > info->time_do_die)
         {
             info->died = 1;
             printf("%ld %d died\n", elapsed_time(info), philo->id);

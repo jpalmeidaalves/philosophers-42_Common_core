@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rountine.c                                         :+:      :+:    :+:   */
+/*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/13 09:01:47 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/13 11:49:02 by joaoalme         ###   ########.fr       */
+/*   Created: 2023/07/03 19:18:50 by joaoalme          #+#    #+#             */
+/*   Updated: 2023/07/13 08:56:04 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+/* void    *debug_function(void *arg)
+{
+    t_data  *info;
+
+    int i = 0;    
+    info = (t_data *)arg;
+    while (i < 1000000)
+    {
+        pthread_mutex_lock(&info->philo_muts[0]);
+        info->var++;
+        pthread_mutex_unlock(&info->philo_muts[0]);
+        i++;
+    }
+    return (NULL);
+}
+  */
 
 void    eat(t_data *info, t_philo *philo)
 {
@@ -24,13 +41,13 @@ void    eat(t_data *info, t_philo *philo)
         {
             info->forks[info->nb_of_philos - 1] = 1;
             philo->right_fork = 1;
-            printf("%ld %d has taken a fork\n",elapsed_time(info),philo->id);
+            printf("%5ldms %d has taken a fork\n",elapsed_time(info),philo->id);
         }
         if (info->forks[i] == 0)
         {
             info->forks[i] = 1;
             philo->left_fork = 1;
-            printf("%ld %d has taken a fork\n",elapsed_time(info),philo->id);
+            printf("%5ldms %d has taken fork\n",elapsed_time(info),philo->id);
         }
     }
     else 
@@ -39,28 +56,27 @@ void    eat(t_data *info, t_philo *philo)
         {            
             info->forks[i - 1] = 1;
             philo->right_fork = 1;
-            printf("%ld %d has taken a fork\n", elapsed_time(info),philo->id);
+            printf("%5ldms %d has take righ fork\n", elapsed_time(info),philo->id);
         }
         if (info->forks[i] == 0)
         {
             info->forks[i] = 1;
             philo->left_fork = 1;
-            printf("%ld %d has taken a fork\n", elapsed_time(info), philo->id);
+            printf("%5ldms %d has take left fork\n", elapsed_time(info), philo->id);
         }
     }
     if (i == 0)
     {
         if (philo->right_fork && philo->left_fork)
         {
-            printf("%ld %d is eating\n", elapsed_time(info),philo->id);
-            philo->last_meal = get_time();
-            milisleep(info->time_to_eat);
+            printf("%5ldms %d is eating\n", elapsed_time(info),philo->id);
+            ft_usleep(info->time_to_eat);
             info->forks[info->nb_of_philos - 1] = 0;
             philo->right_fork = 0;
-            // printf("%5ldms %d drop right fork\n",elapsed_time(info),philo->id);
+            printf("%5ldms %d drop right fork\n",elapsed_time(info),philo->id);
             info->forks[i] = 0;
             philo->left_fork = 0;
-            // printf("%5ldms %d drop left fork\n", elapsed_time(info),philo->id);
+            printf("%5ldms %d drop left fork\n", elapsed_time(info),philo->id);
             sleeping(philo);
         }
     }
@@ -68,15 +84,15 @@ void    eat(t_data *info, t_philo *philo)
     {    
         if (philo->right_fork && philo->left_fork)
         {
-            printf("%ld %d is eating\n", elapsed_time(info),philo->id);
+            printf("%5ldms %d is eating\n", elapsed_time(info),philo->id);
             philo->last_meal = get_time();
-            milisleep(info->time_to_eat);
+            ft_usleep(info->time_to_eat);
             info->forks[i - 1] = 0;
             philo->right_fork = 0;
-            // printf("%5ldms %d drop right fork\n",elapsed_time(info),philo->id);
+            printf("%5ldms %d drop right fork\n",elapsed_time(info),philo->id);
             info->forks[i] = 0;
             philo->left_fork = 0;
-            // printf("%5ldms %d drop left fork\n", elapsed_time(info),philo->id);
+            printf("%5ldms %d drop left fork\n", elapsed_time(info),philo->id);
             sleeping(philo);
         }
     }
@@ -87,9 +103,9 @@ void    sleeping(t_philo *philo)
 {
     int sleep_time = philo->info->time_to_sleep;
 
-    printf("%ld %d is sleeping\n", elapsed_time(philo->info), philo->id);
-    milisleep(sleep_time);
-    printf("%ld %d is thinking\n", elapsed_time(philo->info), philo->id);
+    printf("%5ldms %d is sleeping\n", elapsed_time(philo->info), philo->id);
+    ft_usleep(sleep_time);
+    printf("%5ldms %d is thinking\n", elapsed_time(philo->info), philo->id);
 }
 
 void    *routine(void *arg)
@@ -105,14 +121,14 @@ void    *routine(void *arg)
         // printf("ph-id: %d\n" , philo->id); 
         if (philo->id % 2 == 0 && !philo->info->first_round)
         {
-            milisleep(1);
+            ft_usleep(1);
             philo->info->first_round = 1;
         }
         eat(info, philo);
-        if (get_time() - philo->last_meal > info->time_do_die)
+        if ((int)get_time() - (int)philo->last_meal > info->time_do_die)
         {
             info->died = 1;
-            printf("%ld %d died\n", elapsed_time(info), philo->id);
+            printf("%5ldms %d DIED!\n", elapsed_time(info), philo->id);
             break;
         }
 
@@ -120,3 +136,31 @@ void    *routine(void *arg)
     
     return (NULL);
 }
+
+int    start_philo(int ac, char **args)
+{
+    t_data      info;
+    t_philo     *philo;
+
+    start_info(&info, ac, args);
+    philo = malloc(sizeof(t_philo) * (info.nb_of_philos) );
+    init_ph_muts(&info);
+    init_forks(&info);
+
+    init_philos_thread(&info, philo);
+    // print_philos(info, *philo);
+    //join_thread(philo, info);
+    // printf("debug result: %d\n", info.var);
+    
+    free_struct(&info);
+    return (0);
+}
+
+int     main(int ac, char**av)
+{
+    if (check_input(ac, av) < 0)
+        return (-1);
+    start_philo(ac, av);    
+    return (0);
+}
+

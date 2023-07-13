@@ -6,7 +6,7 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 09:01:47 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/13 11:49:02 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/13 11:48:37 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void    sleeping(t_philo *philo)
 {
     int sleep_time = philo->info->time_to_sleep;
 
-    printf("%ld %d is sleeping\n", elapsed_time(philo->info), philo->id);
+    printf("%ld  %d is sleeping\n", elapsed_time(philo->info), philo->id);
     milisleep(sleep_time);
     printf("%ld %d is thinking\n", elapsed_time(philo->info), philo->id);
 }

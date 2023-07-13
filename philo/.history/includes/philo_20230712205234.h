@@ -6,7 +6,7 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 19:12:16 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/13 11:47:07 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/12 20:52:34 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ typedef struct s_data
     int         index;
     int         nb_of_philos;
     int         nb_rounds;
-    unsigned long         time_do_die;
-    unsigned long         time_to_eat;
-    unsigned long         time_to_sleep;
+    int         time_do_die;
+    int         time_to_eat;
+    int         time_to_sleep;
     int         *forks;
     int         var;
     int         died;
@@ -54,7 +54,7 @@ typedef struct s_data
 //philo.
 void    *routine(void *arg);
 void    *debug_function(void *arg);
-void    sleeping(t_philo *philo);
+void    sleeping(t_philo *philo)
 
 
 //check_input.c
@@ -66,7 +66,7 @@ void    print_philos(t_data philos, t_philo philo);
 //time_related.c
 uint64_t    get_time(void);
 uint64_t    elapsed_time(t_data *info);
-void     milisleep(unsigned int nb);
+void     ft_usleep(unsigned int nb);
 
 //utils.c
 long	ft_atol(const char *nptr);
