@@ -6,81 +6,88 @@
 /*   By: joaoalme <joaoalme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:04:13 by joaoalme          #+#    #+#             */
-/*   Updated: 2023/07/13 11:59:46 by joaoalme         ###   ########.fr       */
+/*   Updated: 2023/07/22 21:40:03 by joaoalme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void    init_philos_thread(t_data *info, t_philo *philo)
+static void	check_mutex_init(pthread_mutex_t *mut)
 {
-    int i;
+	int	result;
 
-    philo = malloc(sizeof(t_philo) * info->nb_of_philos);
-    i = 0;
-    while (i < info->nb_of_philos)
-    {
-        philo[i].info = info;
-        // pthread_create(&info->philo[i].threads_ph, NULL, debug_function, (void *)info);
-        philo[i].id = i + 1;
-        philo[i].last_meal = get_time();
-        philo[i].right_fork = 0;
-        philo[i].left_fork = 0;
-        pthread_create(&philo[i].threads_ph, NULL, routine, (void *)&philo[i]);
-        // printf("thread %d created\n", philo[i].id);
-        i++;
-    }
-    i = 0;
-    while (i < info->nb_of_philos)
-    {
-        pthread_join(philo[i].threads_ph, NULL);
-        i++;
-    }
+	result = pthread_mutex_init(mut, NULL);
+	if (result > 0)
+		printf("Mutex init fail\n");
 }
 
-
-void    start_info(t_data *info, int ac, char **args)
+void	init_philo(t_data *info, t_philo *philo)
 {
-    (void)ac;
-    info->index = 0;
-    info->nb_of_philos = ft_atoi(args[1]);
-    info->time_do_die = (unsigned long)ft_atoi(args[2]);
-    info->time_to_eat = (unsigned long)ft_atoi(args[3]);
-    info->time_to_sleep = (unsigned long)ft_atoi(args[4]);
-    if (ac == 6)
-        info->nb_rounds = ft_atoi(args[5]);
-    else
-        info->nb_rounds = -1;
-    info->start_time = get_time();
-    info->var = 0;
-    info->philo_muts = NULL;
-    info->died = 0;
-    // info->first_round = 1;
+	int	i;
+
+	i = -1;
+	while (++i < info->nb_of_philos)
+	{
+		philo[i].id = i + 1;
+		philo[i].last_meal = 0;
+		philo[i].nb_meals = 0;
+		check_mutex_init(&philo[i].left_fork);
+		philo[i].l_fork = 0;
+		philo[i].right_fork = NULL;
+		philo[i].r_fork = NULL;
+		philo[i].info = info;
+		if (i == info->nb_of_philos - 1)
+		{
+			philo[i].right_fork = &philo[0].left_fork;
+			philo[i].r_fork = &philo[0].l_fork;
+		}
+		else
+		{
+			philo[i].right_fork = &philo[i + 1].left_fork;
+			philo[i].r_fork = &philo[i + 1].l_fork;
+		}
+	}
 }
 
-void    init_ph_muts(t_data *info)
+void	start_info(t_data *info, int ac, char **args)
 {
-    int i;
-    
-    info->philo_muts = malloc(sizeof(pthread_mutex_t) * info->nb_of_philos);
-    i = 0;
-    while (i < info->nb_of_philos)
-    {
-        pthread_mutex_init(&info->philo_muts[i], NULL);
-        i++;
-    }
-    
+	info->nb_of_philos = ft_atoi(args[1]);
+	info->time_do_die = (unsigned long)ft_atoi(args[2]);
+	info->time_to_eat = (unsigned long)ft_atoi(args[3]);
+	info->time_to_sleep = (unsigned long)ft_atoi(args[4]);
+	if (ac == 6)
+		info->total_rounds = ft_atoi(args[5]);
+	else
+		info->total_rounds = -1;
+	info->start_time = 0;
+	info->end_of_simulation = 0;
+	info->first_round = 0;
+	check_mutex_init(&info->print);
+	check_mutex_init(&info->check_end);
 }
 
-void    init_forks(t_data *info)
+int	start_philos_threads(t_data *info, t_philo *ph)
 {
-    int     i;
-    
-    info->forks = malloc(sizeof(int) * info->nb_of_philos);
-    i = 0;
-    while (i < info->nb_of_philos)
-    {
-        info->forks[i] = 0;
-        i++;
-    }
+	int				i;
+	unsigned long	t;
+	pthread_t		check_dead;
+
+	i = -1;
+	t = get_time();
+	info->start_time = t;
+	while (++i < info->nb_of_philos)
+		ph[i].last_meal = t;
+	i = -1;
+	if (pthread_create(&check_dead, NULL, monitor, (void *)ph) != 0)
+		return (0);
+	while (++i < info->nb_of_philos)
+	{
+		if (pthread_create(&ph[i].th_ph, NULL, routine, (void *)&ph[i]) != 0)
+			return (0);
+	}
+	i = -1;
+	while (++i < info->nb_of_philos)
+		pthread_join(ph[i].th_ph, NULL);
+	pthread_join(check_dead, NULL);
+	return (1);
 }
